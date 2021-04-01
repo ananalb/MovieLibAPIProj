@@ -25,6 +25,7 @@ namespace WebAPISample.Controllers
             // Retrieve all movies from db logic
             var movies = _context.Movies;
             //return Ok(new string[] { "movie1 string", "movie2 string" });
+
             return Ok(movies);
         }
 
@@ -40,15 +41,15 @@ namespace WebAPISample.Controllers
 
         // POST api/movie
         [HttpPost]
-        public IActionResult Post([FromBody]Movie value)
+        public IActionResult Post([FromBody]Movie movie)
         {
             // Create movie in db logic
           
             try
             {
-                _context.Movies.Add(value);
+                _context.Movies.Add(movie);
                 _context.SaveChanges();
-                return Ok();
+                return Created("api/Movie", movie);
             }
             catch (Exception err)
             {
@@ -78,12 +79,12 @@ namespace WebAPISample.Controllers
         public IActionResult Delete(int id)
         {
             // Delete movie from db logic
-            var song = _context.Movies.Where(e => e.MovieId == id).FirstOrDefault();
+            var movie = _context.Movies.Where(e => e.MovieId == id).FirstOrDefault();
 
 
             try
             {
-                _context.Movies.Remove(song);
+                _context.Movies.Remove(movie);
                 _context.SaveChanges();
                 return Ok();
             }

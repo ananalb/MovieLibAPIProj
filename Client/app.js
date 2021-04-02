@@ -5,7 +5,7 @@
             Genre : this["genre"].value,
         	Director: this["director"].value
         };
-
+    }
         $.ajax({
             url: 'https://localhost:44325/api/movie',
             dataType: 'json',
@@ -17,39 +17,64 @@
             },
             error: function( jqXhr, textStatus, errorThrown ){
                 console.log( errorThrown );
-            
             }
         });
         e.preventDefault();
-
+        $(document).ready(function(){
         $.ajax({
             url: 'https://localhost:44325/api/movie',
             dataType: 'json',
             type: 'get',
-        }).then(function(data){{
+            success: function(){
+                $('.movieData').html('');
+            }
+        })
+    })
+        .then(function(data){
             $.each(data, function(index, value){
-                $("#response pre").append(
+                console.log(index);
+                $(".movieData").append(
                     "<tr>"+
                     "<td>"+ value.Title + "<td>" +
                     "<td>"+ value.Genre + "<td>" +
                     "<td>"+ value.Director + "<td>" +
-            )
+                    "</tr>"
+                );
             });
-        }
-            console.log(data);
-        })                        }
-        });      
+        });
+        
+    
+    function getAllMovies(){
+        $(document).ready(function() {
+            $.ajax({
+                type:'get',
+                url: 'https://localhost:44325/api/movie',
+                dataType:'jason',
+                success: function(){
+                    $('.movieData').html('');
+                }
+            })
+            .then(function(data) {
+                $.each(data, function(index, value){
+                    $('.movieData').append(
+                        "<tr>"+
+                    "<td>"+ value.Title + "<td>" +
+                    "<td>"+ value.Genre + "<td>" +
+                    "<td>"+ value.Director + "<td>" +
+                    "</tr>"
+                );
+            });
+        });
+    });
+
+                             
+    function getColor(){
         $(document).ready(function(){
             $("button").click(function(){
               $("body").css("background-color", "yellow","green");
-            });
-          });
-
+        });
+     });
+    };
         e.preventDefault();
-
-    }
-
     $('#my-form').submit( processForm );
-
-})(jQuery);
-
+}(jQuery)

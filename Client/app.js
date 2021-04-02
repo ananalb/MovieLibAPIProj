@@ -19,8 +19,14 @@
                 console.log( errorThrown );
             
             }
-        });
+        )
         e.preventDefault();
+        $('#my-form').submit( processForm );
+
+    (jQuery);
+
+})
+
 
         $.ajax({
             url: 'https://localhost:44325/api/movie',
@@ -28,28 +34,80 @@
             type: 'get',
         }).then(function(data){{
             $.each(data, function(index, value){
-                $("#response pre").append(
+                $("#movieData").append(
                     "<tr>"+
-                    "<td>"+ value.Title + "<td>" +
-                    "<td>"+ value.Genre + "<td>" +
-                    "<td>"+ value.Director + "<td>" +
-            )
+                    "<td>"+ value.Title + "</td>" +
+                    "<td>"+ value.Genre + "</td>" +
+                    "<td>"+ value.Director + "</td>" +
+                    "</tr>"
+                )
+            
             });
         }
             console.log(data);
-        })                        }
+        })    
+    }                    
         });      
         $(document).ready(function(){
             $("button").click(function(){
-              $("body").css("background-color", "yellow","green");
+              $("body").css("background-color", "yellow");
             });
           });
 
         e.preventDefault();
 
+    $(function(){
+        // $.ajax({
+        //     url: "https://localhost:44325/api/movie",
+        //     type: "GET",
+        //     dataType:"JSON",
+        //     success: function(data){
+        //         console.log(data);
+        //     },
+        //     error: function(err){
+        //         console.log(err)
+        //     }
+        // })
+        populateTable()
+       
+    })
+    
+    
+    function populateTable(){
+        $("#movies").html("")
+        $.get("https://localhost:44325/api/movie", function(data){
+            console.log(data);
+    
+            $.each(data, function(el){
+                $("#movieData").append(`<div>
+                    <div>${index}</div>
+
+                    "<tr>"+
+                    "<td>"+ el.Title + "</td>" +
+                    "<td>"+ el.Genre + "</td>" +
+                    "<td>"+ el.Director + "</td>" +
+                    "</tr>"
+
+                    <div style="color:red">Title: ${el.title}</div>
+                    <div>Director: ${el.director}</div>
+                    <div>Genre: ${el.genre}</div>
+                    <button onClick="editMovie(${el.movieId})">CLick me!</button>
+                    </div><br>`)
+            })
+            // for(let i = 0; i < data.length;i++){
+            //     $("#movies").append(`<div><div>Title: ${data[i].title}</div>
+            //     <div>Director: ${data[i].director}</div>
+            //     <div>Genre: ${data[i].genre}</div>
+            //     </div><br>`)
+            // }
+    
+            //$("#movies").html(JSON.stringify(data))
+        }).fail(function(err){
+            console.log(err)
+        })
     }
-
-    $('#my-form').submit( processForm );
-
-})(jQuery);
-
+    
+    
+    function editMovie(id){
+     console.log(id);
+    }

@@ -58,12 +58,13 @@ namespace WebAPISample.Controllers
         }
 
         // PUT api/movie
-        [HttpPut]
-        public IActionResult Put([FromBody] Movie movie)
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] Movie movie)
         {
             // Update movie in db logic
             try
             {
+                movie.MovieId = id;
                 _context.Movies.Update(movie);
                 _context.SaveChanges();
                 return Ok();

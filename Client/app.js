@@ -5,7 +5,7 @@
             Genre : this["genre"].value,
         	Director: this["director"].value
         };
-
+    }
         $.ajax({
             url: 'https://localhost:44325/api/movie',
             dataType: 'json',
@@ -17,22 +17,20 @@
             },
             error: function( jqXhr, textStatus, errorThrown ){
                 console.log( errorThrown );
-            
             }
         )
         e.preventDefault();
-        $('#my-form').submit( processForm );
-
-    (jQuery);
-
-})
-
-
+        $(document).ready(function(){
         $.ajax({
             url: 'https://localhost:44325/api/movie',
             dataType: 'json',
             type: 'get',
-        }).then(function(data){{
+            success: function(){
+                $('.movieData').html('');
+            }
+        })
+    })
+        .then(function(data){
             $.each(data, function(index, value){
                 $("#movieData").append(
                     "<tr>"+

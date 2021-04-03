@@ -1,31 +1,31 @@
-// (function($){
-//     function processForm( e ){
-//         var dict = {
-//         	Title : this["title"].value,
-//             Genre : this["genre"].value,
-//         	Director: this["director"].value
+(function($){
+    function processForm( e ){
+        var dict = {
+        	Title : this["title"].value,
+            Genre : this["genre"].value,
+        	Director: this["director"].value
 
-//         };
+        };
 
-//         $.ajax({
-//             url: 'https://localhost:44325/api/movie',
-//             dataType: 'json',
-//             type: 'post',
-//             contentType: 'application/json',
-//             data: JSON.stringify(dict),
-//             success: function( data, textStatus, jQxhr ){
-//                 $('#response pre').html( data );
-//             },
-//             error: function( jqXhr, textStatus, errorThrown ){
-//                 console.log( errorThrown );
-//             }
-//         });
+        $.ajax({
+            url: 'https://localhost:44325/api/movie',
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(dict),
+            success: function( data, textStatus, jQxhr ){
+                $('#response pre').html( data );
+            },
+            error: function( jqXhr, textStatus, errorThrown ){
+                console.log( errorThrown );
+            }
+        });
 
-//         e.preventDefault();
-//     }
+        e.preventDefault();
+    }
 
-//     $('#my-form').submit( processForm );
-// })(jQuery); 
+    $('#my-form').submit( processForm );
+})(jQuery); 
 
 //         // .then(function(data){
 //         //     $.each(data, function(index, value){
@@ -112,30 +112,94 @@
 
 
 
-let people = [
-    {
-        firstName: "David",
-        lastName: "Lagrange",
-        gender: "Male"
-    },
-    {
-        firstName: "Harper",
-        lastName: "Lee",
-        gender: "Female"
-    },
-    {
-        firstName: "John",
-        lastName: "Doe",
-        gender: "Male"
-    }
-]
+// let people = [
+//     {
+//         firstName: "David",
+//         lastName: "Lagrange",
+//         gender: "Male"
+//     },
+//     {
+//         firstName: "Harper",
+//         lastName: "Lee",
+//         gender: "Female"
+//     },
+//     {
+//         firstName: "John",
+//         lastName: "Doe",
+//         gender: "Male"
+//     }
+// ]
 
 
-function putDataInTable(){
-    for(let i = 0; i < people.length; i++){
-        $("#davids-table").append(`<tr><td>${people[i].firstName}</td><td>${people[i].lastName}</td><td>${people[i].gender}</td></tr>`)
-    }
+// function putDataInTable(){
+//     for(let i = 0; i < people.length; i++){
+//         $("#davids-table").
+//         append(`<tr><td>${people[i].firstName}
+//         </td><td>${people[i].lastName}
+//         </td><td>${people[i].gender}</td></tr>`)
+//     }
     
+// }
+
+// putDataInTable();//////////////////
+
+
+$(document).ready(function(){
+    
+    $.ajax({
+        url: "https://localhost:44325/api/movie",
+        type: "GET",
+        dataType:"JSON",
+        success: function() {
+            $('#movieData').html('');
+        }
+        })
+        .then(function(data){
+            $.each(data, function(index, el){
+                $('#movieData').append(
+                    "<tr>" +
+                    "<td>" + el.Title + "</td>" +
+                    "<td>" + el.Genre + "</td>" +
+                    "<td>" + el.Director + "</td>" +
+                    "</tr>"
+                );
+            });
+        });
+    });
+  
+
+ $.ajax({
+ url: "https://localhost:44325/api/movie",
+ type: "GET",
+ dataType:"JSON",
+ success: function(data){
+     $('#movieData').html('');
+     
+     $.each(data, function(index, el){
+        $('#movieData').append(`<tr><td>${index}</td><td>${el.title}</td><td>${el.genre}</td><td>${el.director}</td></tr>`)
+    });
+    console.log(data);
+ },
+ error: function(){
+    console.log('Error in the request');
 }
 
-putDataInTable();
+});
+function populateTable(){
+    $("movieData").html("")
+    $.get("https://localhost:44325/api/movie", function(data){
+        console.log(data);
+        $.each(data, function(index,el){
+            $("movieData").append(`<div>
+            <div>${index}</div>
+            <div style;"color:red">Title: ${el.title}</div>
+            <div>Genre: ${el.genre}</div>
+            <div>Director: ${el.director}</div>
+            <button onclick="getMovie(${el.id})>Get Movie</button>
+            </div><br>`)
+        })
+    }).fail(function(err){
+        console.log(err)
+    })
+}
+populateTable();

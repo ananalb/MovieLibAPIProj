@@ -8,11 +8,11 @@
         };
 
         $.ajax({
-            url: 'https://localhost:44325/api/movie',
+            url: 'https://localhost:44325/api/movie' + movieId,
             dataType: 'json',
-            type: 'post',
+            type: "POST",
             contentType: 'application/json',
-            data: JSON.stringify(dict),
+            data: data ,//JSON.stringify(dict),
             success: function( data, textStatus, jQxhr ){
                 $('#movieData').html( data );
             },
@@ -20,48 +20,51 @@
                 console.log( errorThrown );
             }
         });
-
         
-            $("button").click(function(){
-              $("body").css("background-color", "yellow");
-            });
+            // $("button").click(function(){
+            //   $("body").css("background-color", "yellow");
+            // });
           
 
         e.preventDefault();
     }
 
-    $('#my-form').submit( processForm );
+    $('#my-form').submit( processForm);
 })(jQuery);  
+      
+ 
 
-    function populateTable(){
-        $("#movieData").html("")
-        $.get("https://localhost:44325/api/movie", function(data){
-            console.log(data);
-        }).fail(function(err){
-            console.log(err)
-        })
-    }
-    
-    
-//     function editMovie(id){
-//      console.log(id);
-//     }
-// (jquery);  
+$.ajax({
+    url: "https://localhost:44325/api/movie",
+    type: "GET",
+    dataType:"JSON",
+    success: function(data){
+        $('#movieData').html('');
+        
+        $.each(data, function(index, el){
+           $('#movieData').append(`<tr><td>${el.title}
+                                   </td><td>${el.genre}
+                                   </td><td>${el.director}
+                                   </td></tr>`)
+       });
+    },
+    error: function(){
+       console.log('Error in the request');
+   }
+   });
 
- $.ajax({
- url: "https://localhost:44325/api/movie",
- type: "GET",
- dataType:"JSON",
- success: function(data){
-     $('#movieData').html('');
-     
-     $.each(data, function(index, el){
-        $('#movieData').append(`<tr><td>${el.title}</td><td>${el.genre}</td><td>${el.director}</td></tr>`)
-    });
-    console.log(data);
- },
- error: function(){
-    console.log('Error in the request');
-}
 
-});
+
+//    function editMovie(id){
+
+//     $.ajax({
+//     url: "https://localhost:44325/api/movie",
+//     type: "PUT",
+//     dataType: "JSON",
+//     success: function(data){
+//         $('#movieData').append(data.id)
+
+
+// (jquery); 
+
+

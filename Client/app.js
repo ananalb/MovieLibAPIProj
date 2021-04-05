@@ -24,14 +24,6 @@
         });
 
 
-
-
-        
-            // $("button").click(function(){
-            //   $("body").css("background-color", "yellow");
-            // });
-          
-
         e.preventDefault();
     }
 
@@ -68,7 +60,6 @@ $.ajax({
 
 
 //    function editMovie(id){
-
 //     $.ajax({
 //     url: "https://localhost:44325/api/movie",
 //     type: "PUT",

@@ -22,10 +22,6 @@
                 console.log( errorThrown );
             }
         });
-        
-            // $("button").click(function(){
-            //   $("body").css("background-color", "yellow");
-            // });
           
 
         e.preventDefault();

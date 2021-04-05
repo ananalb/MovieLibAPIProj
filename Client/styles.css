@@ -61,9 +61,3 @@ input[type=text], select {
   input[type=submit]:hover {
     background-color: #79a17b;
   }
-  
-  /* div {
-    border-radius: 1px;
-    background-color: #e99595;
-    padding: 0px;
-  } */

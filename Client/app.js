@@ -1,4 +1,5 @@
 (function($){
+    
    
     function processForm( e ){
         var dict = {
@@ -9,19 +10,13 @@
         };
 
         $.ajax({
-            url: 'https://localhost:44325/api/movie', //+ movieId,
+            url: 'https://localhost:44325/api/movie',
             dataType: 'json',
             type: "POST",
             contentType: 'application/json',
-            data: data ,//JSON.stringify(dict),
+            data: JSON.stringify(dict),
             success: function( data, textStatus, jQxhr ){
-                $('#movieData').html( '' );
-                $.each(data, function(index, el){
-                    $('#movieData').append(`<tr><td>${el.title}
-                                            </td><td>${el.genre}
-                                            </td><td>${el.director}
-                                            </td></tr>`)
-                });
+                $('#movieData').html(data);
             },
             error: function( jqXhr, textStatus, errorThrown ){
                 console.log( errorThrown );
@@ -38,7 +33,8 @@
 
 
     $('#my-form').submit( processForm);
-})(jQuery);  
+})
+(jQuery);  
       
  
 

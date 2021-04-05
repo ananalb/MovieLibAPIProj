@@ -69,25 +69,12 @@ $.ajax({
 
 
 // (jquery); 
-function editMovie(id){
-    $.ajax({
-        url: 'https://localhost:44325/api/movie' + movieId,
-        dataType: 'json',
-        type: "PUT",
-        success: function(){
-            alert ("movie has been edited")
-        },
-        error: function(err){
-            console.log( err );
-        }
-    });   
-}
-       
+
 
 
 function deleteMovie(id) {
     $.ajax({
-        url: 'https://localhost:44325/api/movie/' +id,
+        url: 'https://localhost:44325/api/movie/' + id,
         type: 'DELETE',
         success: function () {
             alert ("record has been deleted");
@@ -99,3 +86,21 @@ function deleteMovie(id) {
     });
 }
 
+function editMovie(id){
+    $.ajax({
+        url: 'https://localhost:44325/api/movie' + id,
+        method: 'GET',
+        dataType: 'json',
+        type: "PUT",
+        success: function(data){
+            $('#Title').value(data.title);
+            $('#Genre').value(data.genre);
+            $('#Director').value(data.director);
+            $('#Id').value(data.id);
+        },
+        error: function(err){
+            console.log( err );
+        }
+    });   
+}
+       

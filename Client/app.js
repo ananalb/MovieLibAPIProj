@@ -6,14 +6,13 @@ $(document).ready(function(){
         success: function(data){
             $('#movieData').html('');
             
-            $.each(data, function(index, el){
-                console.log(el)
+            $.each(data, function(index, el){               
                $('#movieData')
                .append(`<tr><td>${el.title}</td>q
                <td>${el.genre}</td>
                <td>${el.director}</td>
                <td><button onclick='deleteMovie(${el.movieId})'>Delete</button></td>
-               <td><button onclick="edit">Edit</button></td>
+               <td><button onclick='editMovie(${el.movieId})'>Edit</button></td>
                </tr>`)
              
            });
@@ -27,8 +26,24 @@ $(document).ready(function(){
 (jQuery);
 
 function deleteMovie(id){
-    console.log(id)
-}
+
+        $.ajax({
+            url: 'https://localhost:44325/api/movie/' + id,
+            type: "DELETE",
+            success: function(id){
+                $('#movieData').remove(id);
+                location.reload()
+            },
+            error: function( jqXhr, textStatus, errorThrown ){
+                alert( errorThrown );              
+            }            
+        });
+    }
+   
+    //$('#my-form').submit( processForm);
+    
+    
+
 
 function processForm( e ){
     var dict = {
